@@ -3,11 +3,14 @@ block content
    .card
       .card-body
          h5.text-center.mb-3 Register
-         include ./inc/messages.pug
+         include ./partials/messages.pug
          form(action="/users/register" method="POST")
             div.form-group
                label(for="name") Full Name
                input(class="form-control" type="text" id="name" name="name" )
+            div.form-group
+               label(for="role") Role
+               input(class="form-control" type="text" id="name" name="role" )
             div.form-group
                label(for="email") E-Mail
                input(class="form-control" type="email" id="email" name="email" placeholder="site@example.com")
@@ -18,5 +21,6 @@ block content
                label(for="confirmPassword") Password
                input(class="form-control" type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password")
             button(type="submit" class="btn w-100 btn-md btn-dark mt-3") Register
+
             p.mt-2.text-center Have an account? 
                a.text-dark(href="/users/login"): strong Login 

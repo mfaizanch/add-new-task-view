@@ -1,10 +1,10 @@
 extends layout
 block content
-   .card.dashboard
-      .card-body
-         .dashboard-head
-            p Welcome 
-            .dashboard-username  #{name}
-            a(href="/users/logout" class="dashboard-logout"): strong Log out
-         include ./inc/messages.pug
-         include ./inc/tasks.pug
+    .card.dashboard
+        .card-body
+            .dashboard-head
+                p Welcome 
+                .dashboard-username  #{name}
+                a(href="/users/logout" class="dashboard-logout"): strong Log out
+            include ./partials/messages.pug
+            include ./partials/task.pug

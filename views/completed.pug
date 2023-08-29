@@ -1,0 +1,19 @@
+extends layout
+include ./partials/task
+
+
+block title
+    title= title
+
+block content
+    .container
+        div(class="m-3 justify-content-center d-flex")
+            img(src="/images/completed.svg", 
+                class="mr-2 align-top", height="48", width="48", alt="Logo")
+            h1 Completed task's:
+        div(class="m-3 flex-row flex-wrap justify-content-center d-flex")
+            if tasks !== {}
+                each item in tasks
+                    +displayTask(item)
+            else
+                p(class="text-center") No any completed tasks!

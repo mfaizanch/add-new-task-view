@@ -1,0 +1,22 @@
+mixin displayTask(task)
+    div(class="d-flex rounded border bg-light m-2 flex-column")
+        div(class="d-flex justify-content-between flex-row m-2")
+            h5(class="mr-5")= task.taskName
+            div(class="d-flex")
+                a(class="mr-2" href="/edit/" + task._id)
+                    img(src="/images/editPen.svg", 
+                        width="16", 
+                        height="16", 
+                        class="d-inline-block align-top", 
+                        alt="Edit pen")
+                a(class="ml-2" href="/delete/" + task._id)
+                    img(src="/images/error.svg", 
+                        width="16", 
+                        height="16", 
+                        class="d-inline-block align-top", 
+                        alt="Edit pen")
+        div(class="m-2 text-center")
+            p(class="text-wrap")= task.taskDescription
+        div(class="d-flex justify-content-between mt-1 px-2 text-white font-italic bg-secondary")
+            p(class="mr-5 status-date") Status: #{task.taskStatus}
+            p(class="status-date") Date: #{task.deadline}

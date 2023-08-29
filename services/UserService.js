@@ -3,15 +3,31 @@ const TaskService = require('./TaskService')
 const UserModel = require('../models/user')
 
 class UserService extends MongooseService {
-   async newTask(user, taskBody) {
-      const newTask = await TaskService.insert({
+   async newTask(user, data ) {
+      const createTask = await TaskService.insert({
          user,
-         body: taskBody,
+         taskName:data.taskName,
+         taskDescription: data.taskDescription,
+         taskStatus:data.taskStatus,
+         deadline:data.deadlineDate,
+
+
+        
       })
-      user.tasks.push(newTask)
+      user.tasks.push(createTask)
       await user.save()
       return newTask
    }
+
+   // async newTypeOfTask(user, taskBody, typeOfTask  ) {
+   //    const newTypeOfTask = await TaskService.insert({
+        
+   //       typeOfRequest: typeOfTask,
+   //    })
+   //    user.tasks.push(newTypeOfTask)
+   //    await user.save()
+   //    return newTask
+   // }
 
    async removeTask(user, taskId) {
       try {

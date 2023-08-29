@@ -1,0 +1,9 @@
+extends layout
+
+block title
+    title Error #{status} 
+
+block content
+    div(class="container text-center" style="padding: 15rem")
+        h1 Error #{status}
+        p= message

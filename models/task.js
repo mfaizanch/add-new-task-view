@@ -6,14 +6,24 @@ const TaskSchema = new mongoose.Schema({
       ref: 'User',
       autopopulate: {maxDepth: 1},
    },
-   body: {
+   taskName: {
       type: String,
-      required: true,
-   },
-   isCompleted: {
-      type: Boolean,
-      default: false,
-   },
+      required: true
+  },
+  taskDescription: {
+      type: String,
+      required: true
+  },
+  taskStatus: {
+      type: String,
+      required: true
+  },
+  deadline: {
+      type: String,
+      required: true
+  },
+
+
    createdAt: {type: Date, default: Date.now},
 })
 

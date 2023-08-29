@@ -10,8 +10,8 @@ module.exports = {
 async function newUser(req, res, next) {
    let messages = []
    try {
-      const {name, email, password, confirmPassword} = req.body
-      if (!(name && email && password && confirmPassword)) {
+      const {name, email, password, confirmPassword, role} = req.body
+      if (!(name && email && password && confirmPassword && role )) {
          messages.push({body: 'All fields is required.'})
       }
       if (password != confirmPassword) {
