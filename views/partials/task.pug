@@ -1,4 +1,9 @@
 mixin displayTask(task)
+.task
+    form.task-form(action="/dashboard" method="POST")
+        input(type="text" class="form-control" name="task" placeholder="Enter new task")
+        button(type="submit" class="btn btn-dark") Add
+.task-list 
     div(class="d-flex rounded border bg-light m-2 flex-column")
         div(class="d-flex justify-content-between flex-row m-2")
             h5(class="mr-5")= task.taskName
