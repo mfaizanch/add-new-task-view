@@ -1,21 +1,26 @@
 const router = require('express').Router()
-const {DashboardController} = require('../controllers')
-const {ensureAuthenticated} = require('../middlewares/auth')
+const { DashboardController } = require('../controllers')
+const { ensureAuthenticated } = require('../middlewares/auth')
 
 
 router.get('/', (req, res) => {
+
     DashboardController.allTasks().then((tasks) => {
-        res.render('index', {
+        res.render('dashboard', {
             title: 'Task Manager',
             tasks: tasks
         });
+        // console.log('we are veryyyy goooooddd')
     });
 });
 
 router.get('/add', (req, res) => {
+    console.log('we are in form')
     res.render('partials//form', {
         flag: true
     });
+    
+    console.log('we are in form router')
 });
 
 router.post('/add', (req, res) => {
