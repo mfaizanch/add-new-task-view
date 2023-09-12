@@ -1,16 +1,18 @@
-extends layout
-include ./partials/task
-
-
-block content
-    .container
-        div(class="m-3 justify-content-center d-flex")
-            img(src="/images/logo.svg", 
-                class="mr-2 align-top", height="48", width="48", alt="Logo")
-            h1 All task's:
-            div(class="m-3 flex-row flex-wrap justify-content-center d-flex")
-        if tasks !== {}
-        each item in tasks
-            +displayTask(item)
-        else
-            p(class="text-center") No any job!
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no")
+        meta(http-equiv="X-UA-Compatible" content="ie=edge")
+        block favicon
+            link(rel="shortcut icon" href="/images/favicon.png" type="image/png")
+        block styles
+            link(rel="stylesheet" href="/stylesheets/style.css")
+            link(rel="stylesheet" href="/css/bootstrap.min.css")
+        block scripts
+            script(src="/jquery.min.js")
+            script(src="/js/bootstrap.bundle.min.js")
+        block title
+    body
+        .wrap
+            include ./partials/header
+            include ./index

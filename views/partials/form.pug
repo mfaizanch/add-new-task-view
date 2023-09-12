@@ -10,7 +10,7 @@ block content
    .container
       div(class="m-3 justify-content-center d-flex")
          img(src= flag ? "/images/add.svg" : "/images/edit.svg", 
-            class="mr-2 align-top", height="48", width="48", alt="Add image")a
+            class="mr-2 align-top", height="48", width="48", alt="Add image")
          h2= flag ? 'Add new task' : 'Edit task'
       form(class="m-3 px-3 pt-3 border grey" style="border-radius: 1rem" method="post", action= flag ? "/add" : "/edit/" + taskID)
          div(class="form-group")
