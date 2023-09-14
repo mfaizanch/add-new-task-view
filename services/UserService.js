@@ -2,34 +2,25 @@ const MongooseService = require('./MongooseService')
 const TaskService = require('./TaskService')
 const UserModel = require('../models/user')
 
-class UserService extends MongooseService {
-   async newTask(user, data) {
-      const createTask = await TaskService.insert({
-         user,
-         taskName: data.taskName,
-         taskDescription: data.taskDescription,
-         taskStatus: data.taskStatus,
-         deadline: data.deadlineDate,
+   class UserService extends MongooseService {
+      async createTask(user, taskName, taskDescription, taskStatus, deadline) {
+         const newTask = await TaskService.insert({
+            user,
+            taskName,
+            taskDescription,
+            taskStatus,
+            deadline,
+           
+         });
+         user.tasks.push(newTask);
+         await user.save();
+         return newTask;
+      }
+   
+   
 
-
-
-      })
-      user.tasks.push(createTask)
-      await user.save()
-      return newTask
-   }
-
-   // async newTypeOfTask(user, taskBody, typeOfTask  ) {
-   //    const newTypeOfTask = await TaskService.insert({
-
-   //       typeOfRequest: typeOfTask,
-   //    })
-   //    user.tasks.push(newTypeOfTask)
-   //    await user.save()
-   //    return newTask
-   // }
-
-   async removeTask(user, taskId) {
+  
+   async  removeTask(user, taskId) {
       try {
          await TaskService.removeOne('_id', taskId)
          const filteredTasks = await user.tasks.filter((task) => task._id != taskId)
@@ -40,14 +31,14 @@ class UserService extends MongooseService {
       }
    }
 
-   async updateTask(user, taskId) {
+   async editTaskById(user, taskId) {
       try {
          const task = await TaskService.find(taskId)
          await TaskService.update(taskId, {
             isCompleted: !task.isCompleted,
          })
          const updatedTasks = await user.tasks.map((task) =>
-            task._id == taskId ? { ...task, isCompleted: !task.isCompleted } : task
+            task._id == taskId ? {...task, isCompleted: !task.isCompleted} : task
          )
          user.tasks = updatedTasks
          await user.save()

@@ -3,6 +3,8 @@ const { DashboardController } = require('../controllers')
 const { ensureAuthenticated } = require('../middlewares/auth')
 
 
+
+
 router.get('/', (req, res) => {
 
     DashboardController.allTasks().then((tasks) => {
@@ -10,7 +12,7 @@ router.get('/', (req, res) => {
             title: 'Task Manager',
             tasks: tasks
         });
-        // console.log('we are veryyyy goooooddd')
+
     });
 });
 
@@ -33,7 +35,7 @@ router.post('/add', (req, res) => {
 router.get('/edit/:id', (req, res) => {
     const taskID = req.params.id;
     DashboardController.findTaskById(taskID).then((task) => {
-        res.render('partials//form', {
+        res.render('partials/form', {
             flag: false,
             taskID: task._id,
             taskName: task.taskName,
@@ -72,9 +74,10 @@ router.get('/inprogress', (req, res) => {
     });
 });
 
+
 router.get('/delete/:id', (req, res) => {
     const taskID = req.params.id;
-    DashboardController.deleteTask(taskID).then(() => {
+    DashboardController.removeTask(req.user, taskID).then(() => {
         res.redirect('/');
     });
 });
