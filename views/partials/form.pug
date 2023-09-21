@@ -1,48 +1,95 @@
 extends ../layout
-
-block favicon
-   link(rel="shortcut icon", href= flag ? "/images/add.png" : "/images/edit.png" type="image/png")
-
-block title
-   title= flag ?  'Add new task' : 'Edit task'
-
 block content
    .container
       div(class="m-3 justify-content-center d-flex")
          img(src= flag ? "/images/add.svg" : "/images/edit.svg", 
             class="mr-2 align-top", height="48", width="48", alt="Add image")
          h2= flag ? 'Add new task' : 'Edit task'
-      form(class="m-3 px-3 pt-3 border grey" style="border-radius: 1rem" method="post", action= flag ? "/add" : "/edit/" + taskID)
+      form(class="m-3 px-3 pt-3 border grey", style="border-radius: 1rem", method="post", action= flag ? "/dashboard/add" : "/dashboard/edit/" + taskID)
          div(class="form-group")
             label(for="taskName")
                | Name:
-            input(name="taskName", class="form-control", type="text", id="taskName", placeholder="Enter task name...", 
-               value= flag ? '' : taskName)
+            input(name="taskName", class="form-control", type="text", id="taskName", placeholder="Enter task name...", value= flag ? '' : taskName)
          div(class="form-group")
             label(for="taskDescription")
                | Description:
-            textarea(name="taskDescription", class="form-control", maxlength="250", placeholder="Enter task description...", 
-               id="taskDescription", rows="2")= flag ? '' : taskDescription
+            textarea(name="taskDescription", class="form-control", maxlength="250", placeholder="Enter task description...", id="taskDescription", rows="2")= flag ? '' : taskDescription
          div(class="form-group")
             label(for="taskStatus")
                | Status:
-            select(name="taskStatus" class="form-control" id="taskStatus")
-               if taskStatus === 'In progress' 
-                  option(selected) In progress
-               else 
-                  option In progress
-               if taskStatus === 'Completed'
-                  option(selected) Completed
-               else
-                  option Completed
-               if taskStatus === 'Expired'
-                  option(selected) Expired
-               else
-                  option Expired
+            select(name="taskStatus", class="form-control", id="taskStatus")
+               each statusOption in ['In progress', 'Completed', 'Expired']
+                  option(value=statusOption, selected=statusOption === taskStatus)= statusOption
          div(class="form-group")
             label(for="deadlineDate")
                | Deadline:
-            input(name="deadlineDate" class="form-control" type="date" id="deadlineDate", value= flag ? '' : deadlineDate)
-         div(class="form-group d-flex justify-content-center")
-            input(class="btn mr-5 btn-success" type="submit" value="Submit")
-            input(class="btn ml-5 btn-danger" type="reset" value="Reset")
+            input(name="deadlineDate", class="form-control", type="date", id="deadlineDate", value= flag ? '' : deadlineDate)
+            div(class="form-group d-flex justify-content-center")
+            button(class="btn mr-5 btn-success", type="submit", onclick="redirectToDashboard()")
+                | Submit
+            input(class="btn ml-5 btn-danger", type="reset", value="Reset")
+
+
+   script.
+       function redirectToDashboard() {
+            window.location.href = "/dashboard"; // Redirect to the dashboard page
+        }
+           
+           
+          
+
+
+
+
+
+
+
+
+//- extends ../layout
+
+//- block favicon
+//-    link(rel="shortcut icon", href= flag ? "/images/add.png" : "/images/edit.png" type="image/png")
+
+//- block title
+//-    title= flag ?  'Add new task' : 'Edit task'
+
+//- block content
+//-    .container
+//-       div(class="m-3 justify-content-center d-flex")
+//-          img(src= flag ? "/images/add.svg" : "/images/edit.svg", 
+//-             class="mr-2 align-top", height="48", width="48", alt="Add image")
+//-          h2= flag ? 'Add new task' : 'Edit task'
+//-       form(class="m-3 px-3 pt-3 border grey" style="border-radius: 1rem" method="post", action= flag ? "/dashboard/add" : "/dashboard/edit/" + taskID)
+//-          div(class="form-group")
+//-             label(for="taskName")
+//-                | Name:
+//-             input(name="taskName", class="form-control", type="text", id="taskName", placeholder="Enter task name...", 
+//-                value= flag ? '' : taskName)
+//-          div(class="form-group")
+//-             label(for="taskDescription")
+//-                | Description:
+//-             textarea(name="taskDescription", class="form-control", maxlength="250", placeholder="Enter task description...", 
+//-                id="taskDescription", rows="2")= flag ? '' : taskDescription
+//-          div(class="form-group")
+//-             label(for="taskStatus")
+//-                | Status:
+//-             select(name="taskStatus" class="form-control" id="taskStatus")
+//-                if taskStatus === 'In progress' 
+//-                   option(selected) In progress
+//-                else 
+//-                   option In progress
+//-                if taskStatus === 'Completed'
+//-                   option(selected) Completed
+//-                else
+//-                   option Completed
+//-                if taskStatus === 'Expired'
+//-                   option(selected) Expired
+//-                else
+//-                   option Expired
+//-          div(class="form-group")
+//-             label(for="deadlineDate")
+//-                | Deadline:
+//-             input(name="deadlineDate" class="form-control" type="date" id="deadlineDate", value= flag ? '' : deadlineDate)
+//-          div(class="form-group d-flex justify-content-center")
+//-             input(class="btn mr-5 btn-success" type="submit" value="Submit")
+//-             input(class="btn ml-5 btn-danger" type="reset" value="Reset")

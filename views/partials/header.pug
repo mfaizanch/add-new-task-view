@@ -1,6 +1,6 @@
 header
     nav(class="navbar navbar-expand-lg navbar-light bg-light")
-        a(class="navbar-brand" href="/")
+        a(class="navbar-brand" href="/dashboard")
             img(src="/images/logo.svg", 
                 width="32", 
                 height="32", 
@@ -20,11 +20,11 @@ header
         div(class="collapse navbar-collapse" id="navbarSupportedContent")
             ul(class="navbar-nav mr-auto")
                 li(class="nav-item active")
-                    a(class="nav-link" href="/")
+                    a(class="nav-link" href="/dashboard")
                         | Home <span class="sr-only">(current)</span>
                 li(class="nav-item dropdown")
                     a(class="nav-link dropdown-toggle",
-                        href="/",
+                        href="/dashboard",
                         id="navbarDropdown",
                         role="button",
                         data-toggle="dropdown",
@@ -32,15 +32,15 @@ header
                         aria-expanded="false")
                         | Status
                     div(class="dropdown-menu" aria-labelledby="navbarDropdown")
-                        a(class="dropdown-item" href="/")
+                        a(class="dropdown-item" href="/dashboard")
                             | All
-                        a(class="dropdown-item" href="/completed")
+                        a(class="dropdown-item" href="/dashboard/completed")
                             | Completed
-                        a(class="dropdown-item" href="/inprogress")
+                        a(class="dropdown-item" href="/dashboard/inprogress")
                             | In progress
-            a(class="btn btn-outline-success mr-3" href="/add" role="button")
+            a(class="btn btn-outline-success mr-3" href="/dashboard/add" role="button")
                 | Add new task
-            form(class="form-inline my-2 my-lg-0" method="get" action="/search")
-                input(class="form-control mr-sm-2" type="search" placeholder="Enter task name..." aria-label="Search")
-                button(class="btn btn-outline-success my-2 my-sm-0" type="submit")
-                    | Search
+            //- form(class="form-inline my-2 my-lg-0" method="get" action="/search")
+            //-     input(class="form-control mr-sm-2" type="search" placeholder="Enter task name..." aria-label="Search")
+            //-     button(class="btn btn-outline-success my-2 my-sm-0" type="submit")
+            //-         | Search

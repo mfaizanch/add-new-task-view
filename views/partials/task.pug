@@ -3,13 +3,13 @@ mixin displayTask(task)
         div(class="d-flex justify-content-between flex-row m-2")
             h5(class="mr-5")= task.taskName
             div(class="d-flex")
-                a(class="mr-2" href="/edit/" + task._id)
+                a(class="mr-2" href="/dashboard/edit/" + task._id)
                     img(src="/images/editPen.svg", 
                         width="16", 
                         height="16", 
                         class="d-inline-block align-top", 
                         alt="Edit pen")
-                a(class="ml-2" href="/delete/" + task._id)
+                a(class="ml-2" href="/dashboard/delete/" + task._id)
                     img(src="/images/error.svg", 
                         width="16", 
                         height="16", 

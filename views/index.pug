@@ -1,18 +1,17 @@
 extends layout
 include ./partials/task
 
-
 block content
+
     .container
         div(class="m-3 justify-content-center d-flex")
             img(src="/images/logo.svg", 
                 class="mr-2 align-top", height="48", width="48", alt="Logo")
             h1 All task's:
             div(class="m-3 flex-row flex-wrap justify-content-center d-flex") 
-        if tasks !== {}
-        each item in tasks
-            +displayTask(item)
-        else
-            p(class="text-center") No any job!
-
+                if tasks && tasks.length > 0
+                    each item in tasks
+                        +displayTask(item)
+                else
+                    p(class="text-center") No tasks available!
 

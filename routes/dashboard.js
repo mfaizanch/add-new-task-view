@@ -1,36 +1,72 @@
+const express = require('express');
 const router = require('express').Router()
+const app = express();
+router.use(express.json());
+
 const { DashboardController } = require('../controllers')
 const { ensureAuthenticated } = require('../middlewares/auth')
 
 
-
-
 router.get('/', (req, res) => {
-
-    DashboardController.allTasks().then((tasks) => {
+    try {
+        const tasks = DashboardController.allTasks(req, res);
         res.render('dashboard', {
             title: 'Task Manager',
             tasks: tasks
         });
-
-    });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
 });
+
+
+// router.get('/', (req, res) => {
+
+//     ensureAuthenticated,DashboardController.allTasks().then((tasks) => {
+//         res.render('dashboard', {
+//             title: 'Task Manager',
+//             tasks: tasks
+//         });
+
+//     });
+// });
+
+// router.get('/', ensureAuthenticated, DashboardController.allTasks)
 
 router.get('/add', (req, res) => {
     console.log('we are in form')
     res.render('partials//form', {
         flag: true
     });
-    
+
     console.log('we are in form router')
 });
 
-router.post('/add', (req, res) => {
-    let taskData = req.body;
-    DashboardController.createTask(taskData).then(() => {
-        res.redirect('/');
-    });
+// router.post('/add', (req, res) => {
+//     console.log('req.body:', req.body);
+//     let taskData = req.body;
+//     DashboardController.createTask(taskData).then(() => {
+//         res.redirect('/');
+//     });
+// });
+
+
+
+router.post('/add', ensureAuthenticated, async (req, res) => {
+    try {
+        await DashboardController.createTask(req, res);
+        res.redirect('/'); // Add this line to redirect to the root URL after creating a task
+    } catch (error) {
+        console.error(error);
+        return res.status(500).send('Internal Server Error');
+    }
 });
+
+
+
+//  router.post('/add', ensureAuthenticated, DashboardController.createTask)
+
 
 router.get('/edit/:id', (req, res) => {
     const taskID = req.params.id;
@@ -55,6 +91,7 @@ router.post('/edit/:id', (req, res) => {
         res.redirect('/');
     });
 });
+
 
 router.get('/completed', (req, res) => {
     const status = 'Completed';
