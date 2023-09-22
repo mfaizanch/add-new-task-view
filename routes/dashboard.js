@@ -53,17 +53,25 @@ router.get('/add', (req, res) => {
 
 
 
+// router.post('/add', ensureAuthenticated, async (req, res) => {
+//     try {
+//         await DashboardController.createTask(req, res);
+//         res.redirect('/'); // Add this line to redirect to the root URL after creating a task
+//     } catch (error) {
+//         console.error(error);
+//         return res.status(500).send('Internal Server Error');
+//     }
+// });
+
 router.post('/add', ensureAuthenticated, async (req, res) => {
     try {
-        await DashboardController.createTask(req, res);
-        res.redirect('/'); // Add this line to redirect to the root URL after creating a task
+      const createdTask = await DashboardController.createTask(req, res);
+      res.redirect('/');
     } catch (error) {
-        console.error(error);
-        return res.status(500).send('Internal Server Error');
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
     }
-});
-
-
+  });
 
 //  router.post('/add', ensureAuthenticated, DashboardController.createTask)
 
@@ -82,16 +90,48 @@ router.get('/edit/:id', (req, res) => {
     });
 });
 
-router.post('/edit/:id', (req, res) => {
-    const taskID = req.params.id;
-    const taskData = req.body;
-    console.log(taskID);
-    console.log(taskData);
-    DashboardController.editTaskById(taskID, taskData).then(() => {
-        res.redirect('/');
-    });
-});
+// router.post('/edit/:id', (req, res) => {
+//     const taskID = req.params.id;
+//     const taskData = req.body;
+//     console.log(taskID);
+//     console.log(taskData);
+//     DashboardController.editTaskById(taskID, taskData).then(() => {
+//         res.redirect('/');
+//     });
+// });
+// router.post('/edit/:id', (req, res) => {
+    
+//     const taskID = req.params.id;
+//     const taskData = req.body;
+//     console.log(taskID);
+//     console.log(taskData);
+  
+//     DashboardController.editTaskById(req, res, taskID, taskData).then(() => {
+//       res.redirect('/');
+//     });
+//   });
 
+//   router.post('/edit/:id', ensureAuthenticated, async (req, res) => {
+//     try {
+//       const taskID = req.params.id;
+//       const taskData = {
+//         taskName: req.body.taskName,
+//         taskDescription: req.body.taskDescription,
+//         taskStatus: req.body.taskStatus,
+//         deadline: req.body.deadline,
+//       };
+  
+//       // Call the editTaskById controller function
+//       await DashboardController.editTaskById(req, res, taskID, taskData);
+  
+//       // The editTaskById function handles the response and redirects if necessary
+//     } catch (error) {
+//       console.error(error);
+//       res.status(500).send('Internal Server Error');
+//     }
+//   });
+  
+router.post('/edit/:id', ensureAuthenticated, DashboardController.editTaskById);
 
 router.get('/completed', (req, res) => {
     const status = 'Completed';
@@ -112,12 +152,24 @@ router.get('/inprogress', (req, res) => {
 });
 
 
-router.get('/delete/:id', (req, res) => {
-    const taskID = req.params.id;
-    DashboardController.removeTask(req.user, taskID).then(() => {
-        res.redirect('/');
-    });
-});
+// router.get('/delete/:id', (req, res) => {
+//   const taskID = req.params.id;
+//   DashboardController.deleteTask(req.user, taskID);
+// });
+
+
+router.get('/delete/:id', async (req, res) => {
+    try {
+       const taskID = req.params.id;
+       await DashboardController.deleteTask(req.user, taskID);
+       req.flash('success_message', 'The task was removed.');
+       res.redirect('/dashboard');
+    } catch (error) {
+       res.status(404).send(`The task is not found!, ${error}`);
+    }
+ });
+ 
+
 
 router.get('/search', (req, res) => {
 
